@@ -11,4 +11,18 @@ end
 function M.update_connection(key, value)
 	M.connection[key] = value
 end
+
+function M.connection_input(key)
+	local input = fn.input
+	if key == "pass" then
+		input = fn.inputsecret
+	end
+
+	local result = input(key .. ": ")
+	if utils.is_string_empty(result) then
+		result = default
+	end
+	M.update_connection(key, result)
+end
+
 return M
