@@ -64,6 +64,11 @@ local function is_success()
 	return string.match(line[1], '"status": "OK"')
 end
 
+---removes the virtual texts from the current buffer
+function M.clear_virtual_namespaces()
+	api.nvim_buf_clear_namespace(0, ns_query_highlight_id, 0, -1)
+	api.nvim_buf_clear_namespace(0, ns_id, 0, -1)
+end
 
 
 return M
