@@ -31,3 +31,21 @@ local function surreal_db_connection(opts)
 	end
 end
 
+---command function to execute buffer, selection or line.
+---@param opts table
+local function surreal_db_run(opts)
+	local args = opts["args"]
+	if args == "" or args == "buf" or args == "buffer" then
+		query.execute_buffer()
+		return
+	end
+	if args == "sel" or args == "selection" then
+		query.execute_selection()
+		return
+	end
+	if args == "ln" or args == "line" then
+		query.execute_line()
+		return
+	end
+end
+
