@@ -12,6 +12,14 @@ function M.recursive_table_update(dest, src)
 	end
 	return dest
 end
+---returns the buffer content as a string.
+---@param buf? integer
+---@return string
+function M.get_buffer_content(buf)
+	local buffer = buf or 0
+	local lines = api.nvim_buf_get_lines(buffer, 0, -1, false)
+	return table.concat(lines, " ")
+end
 ---splits a string into a table through a passed pattern.
 ---@param str string
 ---@param pattern string
