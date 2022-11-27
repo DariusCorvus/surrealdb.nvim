@@ -21,4 +21,14 @@ local function init_buffer(split_cmd)
 	cmd(":file " .. config.output.buf_name .. "")
 end
 
+
+---returns a boolean based on the success of the surrealdb query.
+---@return boolean
+local function is_success()
+	local line = api.nvim_buf_get_lines(0, 3, 4, false)
+	return string.match(line[1], '"status": "OK"')
+end
+
+
+
 return M
