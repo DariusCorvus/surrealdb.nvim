@@ -1,3 +1,8 @@
+local api = vim.api
+local fn = vim.fn
+
+local M = {}
+
 ---recursivly updates the passed destination table with the source table, over every depth of nested tables.
 ---@param dest table
 ---@param src table
@@ -31,3 +36,11 @@ function M.split_string(str, pattern)
 	end
 	return t
 end
+---returns true if string is empty, false otherwise.
+---@param s string
+---@return boolean
+function M.is_string_empty(s)
+	return s == nil or s == ""
+end
+
+return M
