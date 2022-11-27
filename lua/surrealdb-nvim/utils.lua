@@ -1,7 +1,22 @@
+table.unpack = table.unpack or unpack
+local keymap_generic_opts = { noremap = true, silent = true }
 local api = vim.api
 local fn = vim.fn
 
 local M = {}
+
+---sets keymaps out of a table global or for the passed buf
+---@param keymaps table
+---@param buf? number if buf number is passed, keymaps only set for the passed buf
+function M.set_keymaps(keymaps, buf)
+	for _, keymap in ipairs(keymaps) do
+		if buf ~= nil then
+			api.nvim_buf_set_keymap(buf, keymap[1], keymap[2], keymap[3], keymap_generic_opts)
+		else
+			api.nvim_set_keymap(keymap[1], keymap[2], keymap[3], keymap_generic_opts)
+		end
+	end
+end
 
 ---recursivly updates the passed destination table with the source table, over every depth of nested tables.
 ---@param dest table
