@@ -51,6 +51,34 @@ function M.split_string(str, pattern)
 	end
 	return t
 end
+
+-- got this helper function from this repository.
+-- https://github.com/theHamsta/nvim-treesitter/blob/a5f2970d7af947c066fb65aef2220335008242b7/lua/nvim-treesitter/incremental_selection.lua#L22-L30
+---returns the selection indizes.
+---@return integer start_row
+---@return integer start_column
+---@return integer end_row
+---@return integer end_column
+function M.get_visual_selection_range()
+	local _, csrow, cscol, _ = table.unpack(fn.getpos("'<"))
+	local _, cerow, cecol, _ = table.unpack(fn.getpos("'>"))
+	if csrow < cerow or (csrow == cerow and cscol <= cecol) then
+		return csrow, cscol, cerow, cecol
+	else
+		return cerow, cecol, csrow, cscol
+	end
+end
+
+---returns the visual selection as a string.
+---@param buf? integer
+---@return string
+function M.get_visual_selection(buf)
+	local buffer = buf or 0
+	local start_row, start_col, end_row, end_col = M.get_visual_selection_range()
+	local range = api.nvim_buf_get_text(buffer, start_row - 1, start_col - 1, end_row - 1, end_col - 1, {})
+	return table.concat(range, " ")
+end
+
 ---returns true if string is empty, false otherwise.
 ---@param s string
 ---@return boolean
