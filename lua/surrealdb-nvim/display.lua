@@ -21,6 +21,41 @@ local function init_buffer(split_cmd)
 	cmd(":file " .. config.output.buf_name .. "")
 end
 
+---draws a virtual text based on the passed parameter success.
+---@param success boolean
+local function draw_virtual_text(success)
+	api.nvim_buf_clear_namespace(0, ns_id, 0, -1)
+	local status = "fail"
+	if success then
+		status = "success"
+	end
+	local row = api.nvim_win_get_cursor(0)[1]
+	local virt_text = config.virtual_texts[status]
+	api.nvim_buf_set_extmark(0, ns_id, row - 1, 0, { virt_text = { virt_text } })
+end
+
+---highlights text in the given buffer by the passed indices.
+---@param start_row integer
+---@param start_col integer
+---@param end_row integer
+---@param end_col integer
+function M.highlight_query(start_row, start_col, end_row, end_col)
+	for i = start_row, end_row + 1 do
+		local col_start = 0
+		local col_end = -1
+		if i == start_row then
+			col_start = start_col - 1
+		end
+		if i == end_row then
+			col_end = end_col
+		end
+		api.nvim_buf_add_highlight(0, ns_query_highlight_id, "Visual", i - 1, col_start, col_end)
+	end
+end
+
+function M.highlight_line(line)
+	api.nvim_buf_add_highlight(0, ns_query_highlight_id, "Visual", line - 1, 0, -1)
+end
 
 ---returns a boolean based on the success of the surrealdb query.
 ---@return boolean
