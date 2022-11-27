@@ -70,5 +70,30 @@ function M.clear_virtual_namespaces()
 	api.nvim_buf_clear_namespace(0, ns_id, 0, -1)
 end
 
+---displays the passed content in a buffer
+---@param content table
+function M.buffer_output(content)
+	api.nvim_buf_clear_namespace(0, ns_query_highlight_id, 0, -1)
+	local win_tmp = api.nvim_get_current_win()
+	if fn.bufloaded(config.output.buf_name) == 0 then
+		if config.output.split == "vertical" then
+			init_buffer(":vsplit")
+		end
+		if config.output.split == "horizontal" then
+			init_buffer(":split")
+		end
+	end
+
+	local buf = fn.bufnr(config.output.buf_name)
+	local win = fn.win_findbuf(buf)[1]
+
+	api.nvim_set_current_win(win)
+	cmd(":%d")
+	api.nvim_buf_set_text(buf, 0, 0, 0, 0, content)
+	cmd(config.output.format_cmd)
+	local success = is_success()
+	api.nvim_set_current_win(win_tmp)
+	draw_virtual_text(success)
+end
 
 return M
