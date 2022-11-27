@@ -7,3 +7,27 @@ local display = require("lua.surrealdb-nvim.display")
 local api = vim.api
 local cmd = vim.cmd
 
+---command function to update certain connection variables.
+---@param opts table
+local function surreal_db_connection(opts)
+	local args = opts["args"]
+	if args == "" or args == "env" then
+		for key, value in pairs(utils.load_connection_from_env()) do
+			config.update_connection(key, value)
+		end
+		return
+	end
+
+	if args == "user" or args == "pass" or args == "host" or args == "ns" or args == "db" then
+		config.connection_input(args)
+		return
+	end
+
+	if args == "all" then
+		for key, _ in pairs(default.connection_mapping) do
+			config.connection_input(key)
+		end
+		return
+	end
+end
+
