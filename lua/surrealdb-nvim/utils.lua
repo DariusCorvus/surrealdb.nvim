@@ -32,6 +32,7 @@ function M.recursive_table_update(dest, src)
 	end
 	return dest
 end
+
 ---returns the buffer content as a string.
 ---@param buf? integer
 ---@return string
@@ -40,6 +41,7 @@ function M.get_buffer_content(buf)
 	local lines = api.nvim_buf_get_lines(buffer, 0, -1, false)
 	return table.concat(lines, " ")
 end
+
 ---splits a string into a table through a passed pattern.
 ---@param str string
 ---@param pattern string
@@ -77,6 +79,39 @@ function M.get_visual_selection(buf)
 	local start_row, start_col, end_row, end_col = M.get_visual_selection_range()
 	local range = api.nvim_buf_get_text(buffer, start_row - 1, start_col - 1, end_row - 1, end_col - 1, {})
 	return table.concat(range, " ")
+end
+
+---reads the environment variables for the surrealdb server and append /sql to the bind variable.
+---@return string
+---@return string
+---@return string
+local function get_connection_env()
+	local bind = fn.getenv("BIND")
+	if type(bind) == "string" then
+		bind = bind:gsub("0.0.0.0", "localhost:8000")
+	else
+		bind = "localhost:8000"
+	end
+	bind = bind .. "/sql"
+
+	local user = fn.getenv("USER")
+	if type(user) ~= "string" then
+		user = "root"
+	end
+	local pass = fn.getenv("PASS")
+	if type(pass) ~= "string" then
+		pass = "root"
+	end
+
+	return bind, user, pass
+end
+
+---returns the credentials from the environment variables: BIND, USER, PASS.
+---if a environment variable is not found, the default value for that variable will be returned.
+---@return table
+function M.load_connection_from_env()
+	local host, user, pass = get_connection_env()
+	return { host = host, user = user, pass = pass }
 end
 
 ---returns true if string is empty, false otherwise.
