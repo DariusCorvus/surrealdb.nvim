@@ -63,3 +63,27 @@ api.nvim_create_user_command("SurrealDBRun", surreal_db_run, {
 	end,
 })
 
+local file_pattern = table.concat(config.file.extensions, ",")
+local au_group = api.nvim_create_augroup("surrealdb.nvim", { clear = true })
+
+---sets the filetype of the current buffer to sql.
+local function set_filetype()
+	cmd(":set filetype=sql")
+end
+
+---sets the keymaps from the config for the current buffer.
+local function set_keymaps()
+	if config.keymaps ~= nil then
+		utils.set_keymaps(config.keymaps, 0)
+	end
+end
+
+local auto_cmds = {
+	{ "BufRead", set_filetype },
+	{ "BufRead", set_keymaps },
+	{ "BufNewFile", set_filetype, "BufNewFile", set_keymaps },
+}
+
+for _, auto_cmd in ipairs(auto_cmds) do
+	api.nvim_create_autocmd(auto_cmd[1], { group = au_group, pattern = file_pattern, callback = auto_cmd[2] })
+end
