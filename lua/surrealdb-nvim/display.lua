@@ -1,4 +1,4 @@
-local config = require("lua.surrealdb-nvim.config")
+local config = require("surrealdb-nvim.config")
 
 local api = vim.api
 local fn = vim.fn
