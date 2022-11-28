@@ -87,3 +87,9 @@ local auto_cmds = {
 for _, auto_cmd in ipairs(auto_cmds) do
 	api.nvim_create_autocmd(auto_cmd[1], { group = au_group, pattern = file_pattern, callback = auto_cmd[2] })
 end
+
+api.nvim_create_autocmd(
+	"InsertEnter",
+	{ group = au_group, pattern = file_pattern, callback = display.clear_virtual_namespaces }
+)
+
