@@ -49,3 +49,10 @@ local function surreal_db_run(opts)
 	end
 end
 
+api.nvim_create_user_command("SurrealDBConnection", surreal_db_connection, {
+	nargs = "?",
+	complete = function(_, _, _)
+		return { "env", "user", "pass", "host", "ns", "db", "all" }
+	end,
+})
+
