@@ -56,3 +56,10 @@ api.nvim_create_user_command("SurrealDBConnection", surreal_db_connection, {
 	end,
 })
 
+api.nvim_create_user_command("SurrealDBRun", surreal_db_run, {
+	nargs = "?",
+	complete = function(_, _, _)
+		return { "buf", "buffer", "sel", "selection", "ln", "line" }
+	end,
+})
+
