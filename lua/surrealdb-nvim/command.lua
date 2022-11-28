@@ -93,3 +93,12 @@ api.nvim_create_autocmd(
 	{ group = au_group, pattern = file_pattern, callback = display.clear_virtual_namespaces }
 )
 
+if config.file.run_on_safe then
+	api.nvim_create_autocmd("BufWrite", {
+		group = au_group,
+		pattern = file_pattern,
+		callback = function()
+			cmd(":SurrealDBRun buf")
+		end,
+	})
+end
