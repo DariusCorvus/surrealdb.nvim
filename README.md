@@ -28,6 +28,8 @@ The binarys `curl` and `jq` need to be on path.
 - highlights the last executed query
 - shows a virtual status text at the right of the executed query
 - opens a buffer with the surrealdb response and reuses this buffer for all executed querys
+- possibility to create a scratchpad to write your querys on the fly
+- displays the response formatted thanks to jq
 
 >[!note] 
 >The hotkeys are only available by default in buffers with the extensions `*.sql`, `*.surql` or `*.sdb` 
