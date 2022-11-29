@@ -35,4 +35,9 @@ M.output = {
 	format_cmd = ":%!jq --indent 2",
 }
 
+M.scratchpad = {
+	buf_name = "SurrealDB Scratch",
+	split = split_direction.HORIZONTAL,
+}
+
 return M
