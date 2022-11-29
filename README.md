@@ -73,6 +73,10 @@ config = {
 		buf_name = "SurrealDB Response",
 		split = "vertical",
 		format_cmd = ":%!jq --indent 2",
-	}
+	},
+	scratchpad = {
+		buf_name = "SurrealDB Scratchpad",
+		split = "horizontal",
+	},
 }
 ```
