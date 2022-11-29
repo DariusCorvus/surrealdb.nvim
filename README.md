@@ -32,6 +32,7 @@ The binarys `curl` and `jq` need to be on path.
 |---|---|---|
 |`:SurrealDBRun`|Runs the current buffer content, line under the cursor or selection | `buf`, `buffer`, `ln`, `line`, `sel`, `selection`|
 |`:SurrealDBConnection`|Changes the certain variables of the used connection | `env`, `user`, `pass`, `host`, `ns`, `db`, `all`|
+|`:SurrealDBScratch`|Creates a buffer that acts as a scratchpad for your querys||
 
 
 ## Setup
