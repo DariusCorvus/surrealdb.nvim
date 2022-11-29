@@ -44,7 +44,7 @@ local surrealdb = require("surrealdb-nvim")
 -- default config
 surrealdb.setup{}
 
-surrealdb.setup{connection = {host="localhost:8001/sql"}} -- updates the key:value pair `host`.
+surrealdb.setup{connection = {host="localhost:8001/sql"}} -- updates the key:value pair `host` of the default config.
 ```
 
 ## Config
