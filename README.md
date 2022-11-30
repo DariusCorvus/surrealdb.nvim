@@ -77,6 +77,10 @@ config = {
 		{"n", "<leader>5l", ":SurrealDBRun ln<CR>"},
 		{"v", "<leader>5", ":<C-U>SurrealDBRun sel<CR>"},
 	},
+	virtual_texts = {
+		success = { "", "GreenSign" },
+		fail = { "", "RedSign" },
+	},
 	output = {
 		buf_name = "SurrealDB Response",
 		split = "vertical",
